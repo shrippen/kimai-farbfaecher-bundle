@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 – unveröffentlicht
+## 0.1.0 – 2026-09-26
 
 - Clash-Analyse nach wahrgenommenem Abstand (OKLab), gewichtet nach gemeinsamer Nutzung und Gruppe
 - Vorschläge *zusammenhängend* und *maximal unterscheidbar*, Palette aus Kimais Farbliste oder frei, Größe der Palette einstellbar
