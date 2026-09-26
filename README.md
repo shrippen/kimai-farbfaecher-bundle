@@ -48,6 +48,23 @@ Oberfläche nach [kimai-plugin-ui](../Kimai%20Plugin%20UI/GUIDELINES.md) (Kit 0.
 `bin/sync.sh` aktualisieren) und den Regeln von [Knust](../Kimai%20Knust/PLUGINS.md): Farbpunkte `kpu-mark`,
 Schwere `kpu-tier`, Zahlen `kpu-num`, keine festen Farben außer Entitätsfarben.
 
+## CI und Release
+
+`.github/workflows/` läuft auf Gitea (git.arianw.de) und auf dem GitHub-Spiegel; Gitea nutzt `.github/workflows`,
+solange es kein `.gitea/workflows` gibt.
+
+- **CI** (jeder Push, Pull Request): PHP-Lint 8.1–8.4, JS-Syntax, Übersetzungen reproduzierbar aus
+  `dev/translations.php`, dann das Plugin-ZIP in ein frisches Kimai 2.67 mit MariaDB installieren und testen (`dev/ci.sh`).
+- **Release** (Tag `vX.Y.Z`): Version = `composer.json`, CHANGELOG-Überschrift `## X.Y.Z – <Datum>`
+  (nicht „unveröffentlicht“). Baut `FarbfaecherBundle-X.Y.Z.zip`, testet genau dieses ZIP in Kimai, legt das Release
+  mit den CHANGELOG-Notizen an (oder nutzt ein im Gitea-UI angelegtes) und hängt das ZIP an.
+
+```bash
+git tag v0.1.0 && git push origin v0.1.0     # Gitea spiegelt den Tag nach GitHub, beide bauen ihr Release
+```
+
+`dev/ci.sh <kimai-dir> <zip>` läuft auch lokal gegen ein installiertes Kimai (`DATABASE_URL` setzen).
+
 ## Aufbau
 
 ```
