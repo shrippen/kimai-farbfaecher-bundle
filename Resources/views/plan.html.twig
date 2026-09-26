@@ -39,8 +39,8 @@
 {% block main %}
     {{ kit.kpi_bar([
         {label: 'farbfaecher.kpi.changes'|trans, value: change_count|amount, highlight: true},
-        {label: 'farbfaecher.kpi.before'|trans, value: (before|reduce((sum, n) => sum + n, 0))|amount, details: ['critical', 'warning', 'info']|map(l => {label: ('farbfaecher.level.' ~ l)|trans, value: before[l]|amount})},
-        {label: 'farbfaecher.kpi.after'|trans, value: (after|reduce((sum, n) => sum + n, 0))|amount, details: ['critical', 'warning', 'info']|map(l => {label: ('farbfaecher.level.' ~ l)|trans, value: after[l]|amount})},
+        {label: 'farbfaecher.kpi.before'|trans, value: (before|reduce((sum, n) => sum + n, 0))|amount, details: ['critical', 'warning', 'info']|map(l => {label: ('farbfaecher.level.' ~ l)|trans, value: before[l]|amount, tier: {critical: 3, warning: 1, info: null}[l]})},
+        {label: 'farbfaecher.kpi.after'|trans, value: (after|reduce((sum, n) => sum + n, 0))|amount, details: ['critical', 'warning', 'info']|map(l => {label: ('farbfaecher.level.' ~ l)|trans, value: after[l]|amount, tier: {critical: 3, warning: 1, info: null}[l]})},
     ]) }}
 
     {% if change_count == 0 %}

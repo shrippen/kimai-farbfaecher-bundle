@@ -37,7 +37,7 @@
         label: 'farbfaecher.kpi.clashes'|trans,
         value: clash_count|amount,
         highlight: true,
-        details: ['critical', 'warning', 'info']|map(l => {label: ('farbfaecher.level.' ~ l)|trans, value: levels[l]|amount}),
+        details: ['critical', 'warning', 'info']|map(l => {label: ('farbfaecher.level.' ~ l)|trans, value: levels[l]|amount, tier: {critical: 3, warning: 1, info: null}[l]}),
     }] %}
     {% for type, row in stats %}
         {% set tiles = tiles|merge([{
