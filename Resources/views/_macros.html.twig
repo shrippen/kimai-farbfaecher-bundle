@@ -1,0 +1,46 @@
+{#
+    Farbfächer – small building blocks shared by the pages. Kit macros (@Farbfaecher/_kit) and Kimai macros come first,
+    these only cover what neither has: color marks with their source, severity tiers, entity labels.
+#}
+
+{#
+    mark(color, source = 'own', title = null, size = null)
+    Color mark of an entity (kpu-mark: Knust shapes it). source: own | inherited (dashed) | generated (dotted).
+    size: null | 'sm' | 'lg'
+#}
+{% macro mark(color, source, title, size) -%}
+    {%- set source = source ?? 'own' -%}
+    {%- set hint = source == 'own' ? '' : ' · ' ~ ('farbfaecher.source.' ~ source)|trans -%}
+    <span class="ff-mark kpu-mark ff-source-{{ source }}{% if size %} ff-mark-{{ size }}{% endif %}" style="background-color: {{ color }}" title="{{ title ? title ~ ' · ' : '' }}{{ color }}{{ hint }}"></span>
+{%- endmacro %}
+
+{% macro type_label(type) -%}
+    {{- {customer: 'customer', project: 'project', activity: 'activity'}[type]|trans -}}
+{%- endmacro %}
+
+{#
+    level_badge(level)
+    Clash severity as kpu-tier: info 1 (yellow), warning 2 (orange), critical 3 (red). Text is always shown.
+#}
+{% macro level_badge(level) -%}
+    {%- set tier = {info: 1, warning: 2, critical: 3}[level] -%}
+    {%- set color = {info: 'yellow', warning: 'orange', critical: 'red'}[level] -%}
+    <span class="badge bg-{{ color }}-lt kpu-tier" data-kpu-tier="{{ tier }}">{{ ('farbfaecher.level.' ~ level)|trans }}</span>
+{%- endmacro %}
+
+{#
+    entity(node, label, color, source)
+    Mark + name, opens the Kimai edit modal. Locked and hidden entities are marked.
+#}
+{% macro entity(node, label, color, source) -%}
+    <span class="ff-pair">
+        {{- _self.mark(color, source, null, null) -}}
+        {%- if node.id is not null -%}
+            <a href="{{ path('admin_' ~ node.type ~ '_edit', {'id': node.id}) }}" class="modal-ajax-form">{{ label ?? node.name }}</a>
+        {%- else -%}
+            <span>{{ label ?? node.name }}</span>
+        {%- endif -%}
+        {%- if node.locked %}<span class="text-secondary" title="{{ 'farbfaecher.locked'|trans }}">{{ icon('locked') }}</span>{% endif -%}
+        {%- if not node.visible %}<span class="badge bg-secondary-lt">{{ 'farbfaecher.hidden'|trans }}</span>{% endif -%}
+    </span>
+{%- endmacro %}

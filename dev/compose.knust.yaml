@@ -1,0 +1,6 @@
+# Adds the Knust theme (sibling checkout) to check the plugin with it, light and dark.
+# Used by: dev/reset.sh --knust
+services:
+  kimai:
+    volumes:
+      - ../../Kimai Knust:/opt/kimai/var/plugins/KnustBundle:ro

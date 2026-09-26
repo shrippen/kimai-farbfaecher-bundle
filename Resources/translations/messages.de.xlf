@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="de" datatype="plaintext" original="messages.en.xliff">
+    <body>
+      <trans-unit id="LzIvoJX" resname="farbfaecher.title">
+        <source>farbfaecher.title</source>
+        <target>Farbfächer</target>
+      </trans-unit>
+      <trans-unit id="GNLsE4Q" resname="farbfaecher.title_plan">
+        <source>farbfaecher.title_plan</source>
+        <target>Farbfächer · Vorschlag</target>
+      </trans-unit>
+      <trans-unit id="y2rpdb1" resname="farbfaecher.action.settings">
+        <source>farbfaecher.action.settings</source>
+        <target>Einstellungen</target>
+      </trans-unit>
+      <trans-unit id="xlPCSML" resname="farbfaecher.action.overview">
+        <source>farbfaecher.action.overview</source>
+        <target>Zur Übersicht</target>
+      </trans-unit>
+      <trans-unit id="nuf2_hI" resname="farbfaecher.context.window">
+        <source>farbfaecher.context.window</source>
+        <target>Gemeinsame Nutzung: letzte %days% Tage</target>
+      </trans-unit>
+      <trans-unit id="7IE2t4Y" resname="farbfaecher.context.threshold">
+        <source>farbfaecher.context.threshold</source>
+        <target>Mindestabstand ΔE %value%</target>
+      </trans-unit>
+      <trans-unit id="E-ctl5g" resname="farbfaecher.palette.theme">
+        <source>farbfaecher.palette.theme</source>
+        <target>Palette: Kimai-Farbliste</target>
+      </trans-unit>
+      <trans-unit id="P9-gyty" resname="farbfaecher.palette.free">
+        <source>farbfaecher.palette.free</source>
+        <target>Palette: frei</target>
+      </trans-unit>
+      <trans-unit id="233MxnY" resname="farbfaecher.context.palette_size">
+        <source>farbfaecher.context.palette_size</source>
+        <target>{1}%count% Farbe|[0,Inf[%count% Farben</target>
+      </trans-unit>
+      <trans-unit id="4abGh-J" resname="farbfaecher.map.palette">
+        <source>farbfaecher.map.palette</source>
+        <target>{1}Palette (%count% Farbe)|[0,Inf[Palette (%count% Farben)</target>
+      </trans-unit>
+      <trans-unit id="OFJMv1n" resname="farbfaecher.kpi.clashes">
+        <source>farbfaecher.kpi.clashes</source>
+        <target>Clashes</target>
+      </trans-unit>
+      <trans-unit id="PnXBXuZ" resname="farbfaecher.kpi.changes">
+        <source>farbfaecher.kpi.changes</source>
+        <target>Änderungen</target>
+      </trans-unit>
+      <trans-unit id="qzNr-4S" resname="farbfaecher.kpi.before">
+        <source>farbfaecher.kpi.before</source>
+        <target>Clashes vorher</target>
+      </trans-unit>
+      <trans-unit id="RCejWfu" resname="farbfaecher.kpi.after">
+        <source>farbfaecher.kpi.after</source>
+        <target>Clashes danach</target>
+      </trans-unit>
+      <trans-unit id="AREch0V" resname="farbfaecher.level.critical">
+        <source>farbfaecher.level.critical</source>
+        <target>Kritisch</target>
+      </trans-unit>
+      <trans-unit id="GYORoep" resname="farbfaecher.level.warning">
+        <source>farbfaecher.level.warning</source>
+        <target>Warnung</target>
+      </trans-unit>
+      <trans-unit id="amzTbZg" resname="farbfaecher.level.info">
+        <source>farbfaecher.level.info</source>
+        <target>Hinweis</target>
+      </trans-unit>
+      <trans-unit id="Q8P0FIz" resname="farbfaecher.source.own">
+        <source>farbfaecher.source.own</source>
+        <target>Eigene Farbe</target>
+      </trans-unit>
+      <trans-unit id="h6hayuR" resname="farbfaecher.source.inherited">
+        <source>farbfaecher.source.inherited</source>
+        <target>Geerbt</target>
+      </trans-unit>
+      <trans-unit id="EQLJ6m0" resname="farbfaecher.source.generated">
+        <source>farbfaecher.source.generated</source>
+        <target>Ohne Farbe</target>
+      </trans-unit>
+      <trans-unit id="G9XMTM4" resname="farbfaecher.plan.title">
+        <source>farbfaecher.plan.title</source>
+        <target>Farben verbessern</target>
+      </trans-unit>
+      <trans-unit id="QqAZzR_" resname="farbfaecher.plan.scope">
+        <source>farbfaecher.plan.scope</source>
+        <target>Umfang</target>
+      </trans-unit>
+      <trans-unit id="Ynl--xs" resname="farbfaecher.plan.strategy">
+        <source>farbfaecher.plan.strategy</source>
+        <target>Strategie</target>
+      </trans-unit>
+      <trans-unit id="AiSd0rV" resname="farbfaecher.plan.submit">
+        <source>farbfaecher.plan.submit</source>
+        <target>Vorschlag berechnen</target>
+      </trans-unit>
+      <trans-unit id="PPSXQjQ" resname="farbfaecher.plan.help">
+        <source>farbfaecher.plan.help</source>
+        <target>Zuerst kommt eine Vorschau, gespeichert wird noch nichts. Gesperrte Farben bleiben immer.</target>
+      </trans-unit>
+      <trans-unit id="SAQsTmP" resname="farbfaecher.plan.strategy_help">
+        <source>farbfaecher.plan.strategy_help</source>
+        <target>Zusammenhängend: Projekte im Farbton ihres Kunden, Tätigkeiten nahe ihrem Projekt. Maximal unterscheidbar: jede Farbe möglichst weit weg von allen anderen.</target>
+      </trans-unit>
+      <trans-unit id="LfaSjjJ" resname="farbfaecher.plan.changes">
+        <source>farbfaecher.plan.changes</source>
+        <target>Geplante Änderungen</target>
+      </trans-unit>
+      <trans-unit id="NNb2dmr" resname="farbfaecher.plan.apply">
+        <source>farbfaecher.plan.apply</source>
+        <target>Übernehmen</target>
+      </trans-unit>
+      <trans-unit id="WRt8hVQ" resname="farbfaecher.plan.empty">
+        <source>farbfaecher.plan.empty</source>
+        <target>Für diese Auswahl gibt es nichts zu ändern.</target>
+      </trans-unit>
+      <trans-unit id="KSGhgxd" resname="farbfaecher.plan.backup_hint">
+        <source>farbfaecher.plan.backup_hint</source>
+        <target>Die bisherigen Farben werden gesichert und lassen sich im Verlauf wiederherstellen.</target>
+      </trans-unit>
+      <trans-unit id="I3Q7-Xu" resname="farbfaecher.plan.remaining">
+        <source>farbfaecher.plan.remaining</source>
+        <target>Verbleibende Clashes</target>
+      </trans-unit>
+      <trans-unit id="-PtYEEO" resname="farbfaecher.plan.remaining_help">
+        <source>farbfaecher.plan.remaining_help</source>
+        <target>Bleiben Clashes übrig, reicht der Farbraum für diesen Mindestabstand nicht aus, oder gesperrte Einträge stehen im Weg.</target>
+      </trans-unit>
+      <trans-unit id="cgrExgO" resname="farbfaecher.scope.clashes">
+        <source>farbfaecher.scope.clashes</source>
+        <target>Clashes beheben, fehlende ergänzen</target>
+      </trans-unit>
+      <trans-unit id="O-hj0BN" resname="farbfaecher.scope.missing">
+        <source>farbfaecher.scope.missing</source>
+        <target>Nur fehlende Farben ergänzen</target>
+      </trans-unit>
+      <trans-unit id="rOodaAp" resname="farbfaecher.scope.all">
+        <source>farbfaecher.scope.all</source>
+        <target>Alles neu färben</target>
+      </trans-unit>
+      <trans-unit id="vxDXSMH" resname="farbfaecher.strategy.hierarchical">
+        <source>farbfaecher.strategy.hierarchical</source>
+        <target>Zusammenhängend</target>
+      </trans-unit>
+      <trans-unit id="h44LAEZ" resname="farbfaecher.strategy.distinct">
+        <source>farbfaecher.strategy.distinct</source>
+        <target>Maximal unterscheidbar</target>
+      </trans-unit>
+      <trans-unit id="b8M2Ye8" resname="farbfaecher.clashes.title">
+        <source>farbfaecher.clashes.title</source>
+        <target>Clashes</target>
+      </trans-unit>
+      <trans-unit id="NXfvpE8" resname="farbfaecher.clashes.more">
+        <source>farbfaecher.clashes.more</source>
+        <target>%shown% von %count%</target>
+      </trans-unit>
+      <trans-unit id="h5GnfF3" resname="farbfaecher.clashes.empty">
+        <source>farbfaecher.clashes.empty</source>
+        <target>Keine Farben liegen näher als ΔE %value% beieinander.</target>
+      </trans-unit>
+      <trans-unit id="Ho7at1W" resname="farbfaecher.column.level">
+        <source>farbfaecher.column.level</source>
+        <target>Schwere</target>
+      </trans-unit>
+      <trans-unit id="KWS3Fcz" resname="farbfaecher.column.type">
+        <source>farbfaecher.column.type</source>
+        <target>Typ</target>
+      </trans-unit>
+      <trans-unit id="EcJliEz" resname="farbfaecher.column.first">
+        <source>farbfaecher.column.first</source>
+        <target>Eintrag</target>
+      </trans-unit>
+      <trans-unit id="bVoEcIH" resname="farbfaecher.column.second">
+        <source>farbfaecher.column.second</source>
+        <target>Ähnlich zu</target>
+      </trans-unit>
+      <trans-unit id="z1-HdzM" resname="farbfaecher.column.distance">
+        <source>farbfaecher.column.distance</source>
+        <target>ΔE</target>
+      </trans-unit>
+      <trans-unit id="ySybfxu" resname="farbfaecher.column.weeks">
+        <source>farbfaecher.column.weeks</source>
+        <target>Wochen gemeinsam</target>
+      </trans-unit>
+      <trans-unit id="fRlOW_d" resname="farbfaecher.column.note">
+        <source>farbfaecher.column.note</source>
+        <target>Anmerkung</target>
+      </trans-unit>
+      <trans-unit id="dTzZgDA" resname="farbfaecher.column.entity">
+        <source>farbfaecher.column.entity</source>
+        <target>Eintrag</target>
+      </trans-unit>
+      <trans-unit id="WnFScTi" resname="farbfaecher.column.colors">
+        <source>farbfaecher.column.colors</source>
+        <target>Farbe</target>
+      </trans-unit>
+      <trans-unit id="ceThsk4" resname="farbfaecher.column.reason">
+        <source>farbfaecher.column.reason</source>
+        <target>Grund</target>
+      </trans-unit>
+      <trans-unit id="qi4fWun" resname="farbfaecher.column.action">
+        <source>farbfaecher.column.action</source>
+        <target>Aktion</target>
+      </trans-unit>
+      <trans-unit id="6ydTUEG" resname="farbfaecher.column.count">
+        <source>farbfaecher.column.count</source>
+        <target>Änderungen</target>
+      </trans-unit>
+      <trans-unit id="V5r-oBI" resname="farbfaecher.note.identical">
+        <source>farbfaecher.note.identical</source>
+        <target>Gleiche Farbe</target>
+      </trans-unit>
+      <trans-unit id="UjytmrP" resname="farbfaecher.note.same_customer">
+        <source>farbfaecher.note.same_customer</source>
+        <target>Gleicher Kunde</target>
+      </trans-unit>
+      <trans-unit id="DbeZysg" resname="farbfaecher.note.same_project">
+        <source>farbfaecher.note.same_project</source>
+        <target>Gleiches Projekt</target>
+      </trans-unit>
+      <trans-unit id="TkB7TLs" resname="farbfaecher.note.both_global">
+        <source>farbfaecher.note.both_global</source>
+        <target>Beide global</target>
+      </trans-unit>
+      <trans-unit id="yUyqm61" resname="farbfaecher.note.color_blind">
+        <source>farbfaecher.note.color_blind</source>
+        <target>Nur bei Rot-Grün-Sehschwäche</target>
+      </trans-unit>
+      <trans-unit id="amfWgSM" resname="farbfaecher.map.title">
+        <source>farbfaecher.map.title</source>
+        <target>Farbkarte</target>
+      </trans-unit>
+      <trans-unit id="eY1eozX" resname="farbfaecher.map.help">
+        <source>farbfaecher.map.help</source>
+        <target>Waagrecht der Farbton, senkrecht die Helligkeit. Punkte, die sich überdecken, sind schwer zu unterscheiden. Kleine Punkte: geerbte oder erzeugte Farbe. Am linken Rand: Grautöne.</target>
+      </trans-unit>
+      <trans-unit id="89bKNPh" resname="farbfaecher.tree.title">
+        <source>farbfaecher.tree.title</source>
+        <target>Nach Kunde</target>
+      </trans-unit>
+      <trans-unit id="h4fI85I" resname="farbfaecher.tree.global">
+        <source>farbfaecher.tree.global</source>
+        <target>Globale Tätigkeiten</target>
+      </trans-unit>
+      <trans-unit id="ZznGvyo" resname="farbfaecher.tree.help">
+        <source>farbfaecher.tree.help</source>
+        <target>Gestrichelter Rand: Farbe geerbt. Gepunkteter Rand: keine Farbe gesetzt, Kimai erzeugt sie aus dem Namen (API-Feld color-safe).</target>
+      </trans-unit>
+      <trans-unit id="pV_FKH4" resname="farbfaecher.history.title">
+        <source>farbfaecher.history.title</source>
+        <target>Verlauf</target>
+      </trans-unit>
+      <trans-unit id="3EV0krK" resname="farbfaecher.history.empty">
+        <source>farbfaecher.history.empty</source>
+        <target>Farbfächer hat noch keine Farben geändert.</target>
+      </trans-unit>
+      <trans-unit id="vDEom-e" resname="farbfaecher.history.restore">
+        <source>farbfaecher.history.restore</source>
+        <target>Wiederherstellen</target>
+      </trans-unit>
+      <trans-unit id="LCnppru" resname="farbfaecher.history.undone">
+        <source>farbfaecher.history.undone</source>
+        <target>Rückgängig gemacht</target>
+      </trans-unit>
+      <trans-unit id="54lEmAM" resname="farbfaecher.history.restored">
+        <source>farbfaecher.history.restored</source>
+        <target>Älteren Stand wiederhergestellt</target>
+      </trans-unit>
+      <trans-unit id="j9bTrQB" resname="farbfaecher.reason.missing">
+        <source>farbfaecher.reason.missing</source>
+        <target>Hatte keine Farbe</target>
+      </trans-unit>
+      <trans-unit id="UV7hcw6" resname="farbfaecher.reason.inherited">
+        <source>farbfaecher.reason.inherited</source>
+        <target>Hatte nur eine geerbte Farbe</target>
+      </trans-unit>
+      <trans-unit id="miFWPT4" resname="farbfaecher.reason.clash">
+        <source>farbfaecher.reason.clash</source>
+        <target>Clash mit einem anderen Eintrag</target>
+      </trans-unit>
+      <trans-unit id="2ODdawu" resname="farbfaecher.reason.recolor">
+        <source>farbfaecher.reason.recolor</source>
+        <target>Neu verteilt</target>
+      </trans-unit>
+      <trans-unit id="1FK9kW8" resname="farbfaecher.reason.follow">
+        <source>farbfaecher.reason.follow</source>
+        <target>Folgt der neuen Farbe von Kunde oder Projekt</target>
+      </trans-unit>
+      <trans-unit id="5EJUVww" resname="farbfaecher.result.applied">
+        <source>farbfaecher.result.applied</source>
+        <target>{0}Keine Farbe geändert.|{1}Eine Farbe geändert.|]1,Inf[%count% Farben geändert.</target>
+      </trans-unit>
+      <trans-unit id="Y9Jf239" resname="farbfaecher.result.restored">
+        <source>farbfaecher.result.restored</source>
+        <target>{0}Keine Farbe wiederhergestellt.|{1}Eine Farbe wiederhergestellt.|]1,Inf[%count% Farben wiederhergestellt.</target>
+      </trans-unit>
+      <trans-unit id="8xh72Uz" resname="farbfaecher.result.skipped">
+        <source>farbfaecher.result.skipped</source>
+        <target>{1}Ein Eintrag wurde inzwischen geändert und bleibt so.|[0,Inf[%count% Einträge wurden inzwischen geändert und bleiben so.</target>
+      </trans-unit>
+      <trans-unit id="aCRYZJY" resname="farbfaecher.error.plan_expired">
+        <source>farbfaecher.error.plan_expired</source>
+        <target>Der Vorschlag ist abgelaufen. Vorschlag neu berechnen.</target>
+      </trans-unit>
+      <trans-unit id="wtK994q" resname="farbfaecher.error.undo_expired">
+        <source>farbfaecher.error.undo_expired</source>
+        <target>Rückgängig ist nicht mehr möglich. Den Stand im Verlauf wiederherstellen.</target>
+      </trans-unit>
+      <trans-unit id="zTUkvlm" resname="farbfaecher.locked">
+        <source>farbfaecher.locked</source>
+        <target>Farbe gesperrt</target>
+      </trans-unit>
+      <trans-unit id="uwmXm0o" resname="farbfaecher.hidden">
+        <source>farbfaecher.hidden</source>
+        <target>Inaktiv</target>
+      </trans-unit>
+      <trans-unit id="3eKtLQI" resname="farbfaecher.lock.label">
+        <source>farbfaecher.lock.label</source>
+        <target>Farbe sperren</target>
+      </trans-unit>
+      <trans-unit id="RiT_AlO" resname="farbfaecher.lock.help">
+        <source>farbfaecher.lock.help</source>
+        <target>Farbfächer verändert diese Farbe nie automatisch.</target>
+      </trans-unit>
+      <trans-unit id="X3K9jKI" resname="farbfaecher.field.pick">
+        <source>farbfaecher.field.pick</source>
+        <target>Farbe wählen</target>
+      </trans-unit>
+      <trans-unit id="_0KFmaE" resname="farbfaecher.field.ok">
+        <source>farbfaecher.field.ok</source>
+        <target>Gut unterscheidbar von allen anderen Einträgen dieses Typs.</target>
+      </trans-unit>
+      <trans-unit id="qmO_YXQ" resname="farbfaecher.field.none">
+        <source>farbfaecher.field.none</source>
+        <target>Keine eigene Farbe: Kimai nutzt die Farbe des übergeordneten Eintrags oder erzeugt eine aus dem Namen.</target>
+      </trans-unit>
+      <trans-unit id="sonJm1M" resname="farbfaecher.field.similar">
+        <source>farbfaecher.field.similar</source>
+        <target>Zu ähnlich zu:</target>
+      </trans-unit>
+      <trans-unit id="4WSVPKW" resname="farbfaecher.field.unrelated">
+        <source>farbfaecher.field.unrelated</source>
+        <target>Ähnlich zu Einträgen, die nicht zusammen genutzt werden:</target>
+      </trans-unit>
+      <trans-unit id="dDBKxnJ" resname="farbfaecher.field.suggestions">
+        <source>farbfaecher.field.suggestions</source>
+        <target>Vorschläge:</target>
+      </trans-unit>
+      <trans-unit id="0h_VioZ" resname="farbfaecher.field.use">
+        <source>farbfaecher.field.use</source>
+        <target>Übernehmen</target>
+      </trans-unit>
+      <trans-unit id="mdXN_d8" resname="farbfaecher.field.weeks">
+        <source>farbfaecher.field.weeks</source>
+        <target>%count% Wo. gemeinsam gebucht</target>
+      </trans-unit>
+      <trans-unit id="V23HJd5" resname="farbfaecher.field.same_customer">
+        <source>farbfaecher.field.same_customer</source>
+        <target>gleicher Kunde</target>
+      </trans-unit>
+      <trans-unit id="YeGlBCx" resname="farbfaecher.field.same_project">
+        <source>farbfaecher.field.same_project</source>
+        <target>gleiches Projekt</target>
+      </trans-unit>
+      <trans-unit id="rm79TYK" resname="farbfaecher.field.both_global">
+        <source>farbfaecher.field.both_global</source>
+        <target>beide global</target>
+      </trans-unit>
+      <trans-unit id="hTGcWVb" resname="farbfaecher.field.help">
+        <source>farbfaecher.field.help</source>
+        <target>Hex-Farbcode, z. B. #3a7bd5</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

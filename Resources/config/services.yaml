@@ -1,0 +1,21 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            $dataDirectory: "%kimai.data_dir%"
+
+    KimaiPlugin\FarbfaecherBundle\:
+        resource: '../../*'
+        exclude:
+            - '../../Resources/'
+            - '../../Model/'
+            - '../../Color/'
+            - '../../dev/'
+            - '../../docs/'
+            - '../../vendor/'
+
+    KimaiPlugin\FarbfaecherBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']

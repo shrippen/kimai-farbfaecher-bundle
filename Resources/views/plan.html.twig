@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+{% import '@Farbfaecher/_kit/macros.html.twig' as kit %}
+{% import '@Farbfaecher/_macros.html.twig' as ff %}
+{% import 'macros/datatables.html.twig' as tables %}
+
+{% set form_id = 'farbfaecher-plan' %}
+{% set plural = {customer: 'customers', project: 'projects', activity: 'activities'} %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include '@Farbfaecher/_kit/assets.html.twig' with {kpu_part: 'css'} %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include '@Farbfaecher/_kit/assets.html.twig' with {kpu_part: 'js'} %}
+    <script>
+        // every proposed change starts selected, the user deselects what should stay
+        document.addEventListener('kimai.initialized', function () {
+            var table = document.querySelector('[data-farbfaecher-preselect]');
+            if (table === null || !window.KimaiPluginUi) {
+                return;
+            }
+            window.KimaiPluginUi.select('{{ form_id }}', JSON.parse(table.getAttribute('data-farbfaecher-preselect')), true);
+        });
+    </script>
+{% endblock %}
+
+{% block page_intro %}
+    {{ kit.context_line([scope_label, strategy_label, (themed ? 'farbfaecher.palette.theme' : 'farbfaecher.palette.free')|trans]) }}
+    {{ parent() }}
+{% endblock %}
+
+{% block page_content_start %}
+    {{ kit.result_callouts() }}
+    {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    {{ kit.kpi_bar([
+        {label: 'farbfaecher.kpi.changes'|trans, value: change_count|amount, highlight: true},
+        {label: 'farbfaecher.kpi.before'|trans, value: (before|reduce((sum, n) => sum + n, 0))|amount, details: ['critical', 'warning', 'info']|map(l => {label: ('farbfaecher.level.' ~ l)|trans, value: before[l]|amount})},
+        {label: 'farbfaecher.kpi.after'|trans, value: (after|reduce((sum, n) => sum + n, 0))|amount, details: ['critical', 'warning', 'info']|map(l => {label: ('farbfaecher.level.' ~ l)|trans, value: after[l]|amount})},
+    ]) }}
+
+    {% if change_count == 0 %}
+        {{ kit.empty_state('farbfaecher.plan.empty'|trans, path('farbfaecher'), 'farbfaecher.action.overview'|trans) }}
+    {% else %}
+        {% set keys = [] %}
+        {% for changes in groups %}{% for change in changes %}{% set keys = keys|merge([change.node.key]) %}{% endfor %}{% endfor %}
+
+        <div class="card mb-3" data-farbfaecher-preselect="{{ keys|json_encode }}">
+            <div class="card-header"><h3 class="card-title">{{ 'farbfaecher.plan.changes'|trans }}</h3></div>
+            {% set columns = {
+                'select': {class: 'alwaysVisible multiCheckbox w-min', orderBy: false, title: false, html_after: kit.bulk_select_all(form_id)},
+                'entity': {class: 'alwaysVisible', orderBy: false, title: 'farbfaecher.column.entity'},
+                'colors': {class: 'alwaysVisible w-min', orderBy: false, title: 'farbfaecher.column.colors'},
+                'reason': {class: 'd-none d-md-table-cell', orderBy: false, title: 'farbfaecher.column.reason'},
+            } %}
+            {{ tables.datatable_header('farbfaecher_plan', columns, null, {boxClass: 'kpu-table-wrap', columnConfig: false, sticky: false}) }}
+                {% for type, changes in groups %}
+                    {{ kit.group_header(plural[type]|trans, null, [changes|length|amount], null, {as_row: true, colspan: columns|length, select: {form: form_id, group: type}}) }}
+                    {% for change in changes %}
+                        {% set reason = change.reason == 'missing' and change.oldSource == 'inherited' ? 'inherited' : change.reason %}
+                        <tr>
+                            <td class="{{ datatable_column_class('farbfaecher_plan', 'select') }}">{{ kit.bulk_checkbox(form_id, change.node.key, change.path, [type]) }}</td>
+                            <td class="{{ datatable_column_class('farbfaecher_plan', 'entity') }}">{{ ff.entity(change.node, change.path, change.oldColor, change.oldSource) }}</td>
+                            <td class="{{ datatable_column_class('farbfaecher_plan', 'colors') }}">
+                                <span class="ff-pair">
+                                    {{ ff.mark(change.oldColor, change.oldSource) }}
+                                    <span class="ff-arrow" aria-hidden="true">{{ icon('right') }}</span>
+                                    {{ ff.mark(change.newColor, 'own', null, 'lg') }}
+                                    <span class="kpu-num small">{{ change.newColor }}</span>
+                                </span>
+                            </td>
+                            <td class="{{ datatable_column_class('farbfaecher_plan', 'reason') }} text-secondary">{{ ('farbfaecher.reason.' ~ reason)|trans }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            {{ tables.data_table_footer(null, null, null) }}
+            <div class="card-footer text-secondary small">{{ 'farbfaecher.plan.backup_hint'|trans }}</div>
+        </div>
+
+        {# reversible: applied at once, then "Undo" in the toast #}
+        {{ kit.bulk_bar(form_id, [{
+            label: 'farbfaecher.plan.apply'|trans,
+            url: path('farbfaecher_apply', {plan: plan_id}),
+            token: csrf_token('farbfaecher'),
+            icon: 'success',
+            ajax: true,
+        }]) }}
+
+        {% if remaining is not empty %}
+            <div class="card mb-3">
+                <div class="card-header"><h3 class="card-title">{{ 'farbfaecher.plan.remaining'|trans }}</h3></div>
+                {% set columns = {
+                    'level': {class: 'alwaysVisible w-min', orderBy: false, title: 'farbfaecher.column.level'},
+                    'first': {class: 'alwaysVisible', orderBy: false, title: 'farbfaecher.column.first'},
+                    'second': {class: 'alwaysVisible', orderBy: false, title: 'farbfaecher.column.second'},
+                    'distance': {class: 'text-end w-min', orderBy: false, title: 'farbfaecher.column.distance'},
+                } %}
+                {{ tables.datatable_header('farbfaecher_remaining', columns, null, {boxClass: 'kpu-table-wrap', columnConfig: false, sticky: false}) }}
+                    {% for clash in remaining %}
+                        <tr>
+                            <td class="{{ datatable_column_class('farbfaecher_remaining', 'level') }}">{{ ff.level_badge(clash.level) }}</td>
+                            <td class="{{ datatable_column_class('farbfaecher_remaining', 'first') }}"><span class="ff-pair">{{ ff.mark(clash.colorA) }} {{ clash.a.name }}</span></td>
+                            <td class="{{ datatable_column_class('farbfaecher_remaining', 'second') }}"><span class="ff-pair">{{ ff.mark(clash.colorB) }} {{ clash.b.name }}</span></td>
+                            <td class="{{ datatable_column_class('farbfaecher_remaining', 'distance') }} kpu-num">{{ clash.distance|format_number({fraction_digit: 1}) }}</td>
+                        </tr>
+                    {% endfor %}
+                {{ tables.data_table_footer(null, null, null) }}
+                <div class="card-footer text-secondary small">{{ 'farbfaecher.plan.remaining_help'|trans }}</div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,203 @@
+{% extends 'base.html.twig' %}
+{% import '@Farbfaecher/_kit/macros.html.twig' as kit %}
+{% import '@Farbfaecher/_macros.html.twig' as ff %}
+{% import 'macros/widgets.html.twig' as widgets %}
+{% import 'macros/datatables.html.twig' as tables %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include '@Farbfaecher/_kit/assets.html.twig' with {kpu_part: 'css'} %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include '@Farbfaecher/_kit/assets.html.twig' with {kpu_part: 'js'} %}
+{% endblock %}
+
+{% block page_intro %}
+    {{ kit.context_line([
+        'farbfaecher.context.window'|trans({'%days%': config.windowDays}),
+        'farbfaecher.context.threshold'|trans({'%value%': config.threshold|amount}),
+        (themed ? 'farbfaecher.palette.theme' : 'farbfaecher.palette.free')|trans,
+        palette is empty ? null : 'farbfaecher.context.palette_size'|trans({'%count%': palette|length}),
+    ]) }}
+    {{ parent() }}
+{% endblock %}
+
+{% block page_content_start %}
+    {{ kit.result_callouts() }}
+    {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    {% set plural = {customer: 'customers', project: 'projects', activity: 'activities'} %}
+
+    {# Clashes first (highlighted), then how many entities of each type have their own color #}
+    {% set tiles = [{
+        label: 'farbfaecher.kpi.clashes'|trans,
+        value: clash_count|amount,
+        highlight: true,
+        details: ['critical', 'warning', 'info']|map(l => {label: ('farbfaecher.level.' ~ l)|trans, value: levels[l]|amount}),
+    }] %}
+    {% for type, row in stats %}
+        {% set tiles = tiles|merge([{
+            label: plural[type]|trans,
+            value: row.total|amount,
+            details: ['own', 'inherited', 'generated']|filter(s => row[s] > 0)|map(s => {label: ('farbfaecher.source.' ~ s)|trans, value: row[s]|amount}),
+        }]) %}
+    {% endfor %}
+    {{ kit.kpi_bar(tiles) }}
+
+    {# What to recolor and how: preview first, nothing is saved here #}
+    <div class="card mb-3">
+        <div class="card-header"><h3 class="card-title">{{ 'farbfaecher.plan.title'|trans }}</h3></div>
+        <div class="card-body">
+            {{ form_start(form) }}
+            <div class="row g-3 align-items-start">
+                <div class="col-md-4">{{ form_row(form.scope) }}</div>
+                <div class="col-md-5">{{ form_row(form.strategy) }}</div>
+                <div class="col-md-3 pt-md-4">
+                    <button type="submit" class="btn btn-primary w-100">{{ icon('visibility', true) }} {{ 'farbfaecher.plan.submit'|trans }}</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    {# Clashes, worst first #}
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="card-title">{{ 'farbfaecher.clashes.title'|trans }}</h3>
+            {% if clash_count > clashes|length %}
+                <div class="card-actions text-secondary small">{{ 'farbfaecher.clashes.more'|trans({'%shown%': clashes|length, '%count%': clash_count}) }}</div>
+            {% endif %}
+        </div>
+        {% if clashes is empty %}
+            <div class="card-body">{{ kit.empty_state('farbfaecher.clashes.empty'|trans({'%value%': config.threshold|amount})) }}</div>
+        {% else %}
+            {% set columns = {
+                'level': {class: 'alwaysVisible w-min', orderBy: false, title: 'farbfaecher.column.level'},
+                'type': {class: 'd-none d-md-table-cell w-min', orderBy: false, title: 'farbfaecher.column.type'},
+                'first': {class: 'alwaysVisible', orderBy: false, title: 'farbfaecher.column.first'},
+                'second': {class: 'alwaysVisible', orderBy: false, title: 'farbfaecher.column.second'},
+                'distance': {class: 'text-end w-min', orderBy: false, title: 'farbfaecher.column.distance'},
+                'weeks': {class: 'text-end w-min d-none d-lg-table-cell', orderBy: false, title: 'farbfaecher.column.weeks'},
+                'note': {class: 'd-none d-xl-table-cell', orderBy: false, title: 'farbfaecher.column.note'},
+            } %}
+            {{ tables.datatable_header('farbfaecher_clashes', columns, null, {boxClass: 'kpu-table-wrap', columnConfig: false, sticky: false}) }}
+                {% for clash in clashes %}
+                    {% set notes = [] %}
+                    {% if clash.colorA == clash.colorB %}{% set notes = notes|merge(['farbfaecher.note.identical'|trans]) %}{% endif %}
+                    {% if clash.siblings and clash.a.type == 'project' %}{% set notes = notes|merge(['farbfaecher.note.same_customer'|trans]) %}{% endif %}
+                    {% if clash.siblings and clash.a.type == 'activity' %}{% set notes = notes|merge([(clash.a.parentKey is null ? 'farbfaecher.note.both_global' : 'farbfaecher.note.same_project')|trans]) %}{% endif %}
+                    {% if clash.colorBlindOnly %}{% set notes = notes|merge(['farbfaecher.note.color_blind'|trans]) %}{% endif %}
+                    <tr>
+                        <td class="{{ datatable_column_class('farbfaecher_clashes', 'level') }}">{{ ff.level_badge(clash.level) }}</td>
+                        <td class="{{ datatable_column_class('farbfaecher_clashes', 'type') }} text-secondary">{{ ff.type_label(clash.a.type) }}</td>
+                        <td class="{{ datatable_column_class('farbfaecher_clashes', 'first') }}">{{ ff.entity(clash.a, graph.path(clash.a.key), clash.colorA, graph.colorSource(clash.a.key)) }}</td>
+                        <td class="{{ datatable_column_class('farbfaecher_clashes', 'second') }}">{{ ff.entity(clash.b, graph.path(clash.b.key), clash.colorB, graph.colorSource(clash.b.key)) }}</td>
+                        <td class="{{ datatable_column_class('farbfaecher_clashes', 'distance') }} kpu-num">{{ clash.distance|format_number({fraction_digit: 1}) }}</td>
+                        <td class="{{ datatable_column_class('farbfaecher_clashes', 'weeks') }} kpu-num">{{ clash.cooccurrenceWeeks > 0 ? clash.cooccurrenceWeeks|amount : '–' }}</td>
+                        <td class="{{ datatable_column_class('farbfaecher_clashes', 'note') }} text-secondary">{{ notes|join(' · ') }}</td>
+                    </tr>
+                {% endfor %}
+            {{ tables.data_table_footer(null, null, null) }}
+        {% endif %}
+    </div>
+
+    {# Color map: marks that overlap are hard to tell apart #}
+    <div class="card mb-3">
+        <div class="card-header"><h3 class="card-title">{{ 'farbfaecher.map.title'|trans }}</h3></div>
+        <div class="card-body">
+            {% if palette is not empty %}
+                {# the limited palette: suggestions only come from these colors #}
+                <div class="subheader mb-1">{{ 'farbfaecher.map.palette'|trans({'%count%': palette|length}) }}</div>
+                <div class="ff-palette mb-3">{% for hex in palette %}{{ ff.mark(hex, 'own', null, null) }}{% endfor %}</div>
+            {% endif %}
+            <div class="text-secondary small mb-2">{{ 'farbfaecher.map.help'|trans }}</div>
+            <div class="row g-3">
+                {% for type, points in scatter %}
+                    <div class="col-lg-4">
+                        <div class="subheader mb-1">{{ plural[type]|trans }}</div>
+                        {# same mapping as the controller: hue 0–360° → 4–100 % #}
+                        {% set ticks = [0, 60, 120, 180, 240, 300, 360] %}
+                        <div class="ff-map" role="img" aria-label="{{ 'farbfaecher.map.title'|trans }} · {{ plural[type]|trans }}">
+                            {% for h in ticks %}<span class="ff-map-line" style="left: {{ 4 + h / 360 * 96 }}%"></span>{% endfor %}
+                            {% for p in points %}
+                                <span class="ff-mark kpu-mark{% if not p.own %} ff-mark-sm{% endif %}" style="left: {{ p.x }}%; top: {{ p.y }}%; background-color: {{ p.hex }}" title="{{ p.name }} · {{ p.hex }}"></span>
+                            {% endfor %}
+                        </div>
+                        <div class="ff-map-axis kpu-num" aria-hidden="true">
+                            {% for h in ticks %}<span style="left: {{ 4 + h / 360 * 96 }}%">{{ h }}°</span>{% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {# Customers with their projects and activities: shows whether colors form families #}
+    <div class="card mb-3">
+        <div class="card-header"><h3 class="card-title">{{ 'farbfaecher.tree.title'|trans }}</h3></div>
+        {% set columns = {
+            'project': {class: 'alwaysVisible', orderBy: false, title: 'project'},
+            'activities': {class: 'alwaysVisible', orderBy: false, title: 'activities'},
+        } %}
+        {{ tables.datatable_header('farbfaecher_tree', columns, null, {boxClass: 'kpu-table-wrap', columnConfig: false, sticky: false}) }}
+            {% for c in tree.customers %}
+                {{ kit.group_header(c.node.name, c.color, [], null, {as_row: true, colspan: columns|length}) }}
+                {% for p in c.projects %}
+                    <tr>
+                        <td class="{{ datatable_column_class('farbfaecher_tree', 'project') }}">{{ ff.entity(p.node, null, p.color, p.source) }}</td>
+                        <td class="{{ datatable_column_class('farbfaecher_tree', 'activities') }}">
+                            <span class="ff-activities">{% for a in p.activities %}{{ ff.mark(a.color, a.source, a.node.name, 'sm') }}{% endfor %}</span>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+            {% if tree.global is not empty %}
+                {{ kit.group_header('farbfaecher.tree.global'|trans, null, [], null, {as_row: true, colspan: columns|length}) }}
+                <tr>
+                    <td colspan="{{ columns|length }}">
+                        <span class="d-inline-flex flex-wrap gap-3">{% for a in tree.global %}{{ ff.entity(a.node, null, a.color, a.source) }}{% endfor %}</span>
+                    </td>
+                </tr>
+            {% endif %}
+        {{ tables.data_table_footer(null, null, null) }}
+        <div class="card-footer text-secondary small">{{ 'farbfaecher.tree.help'|trans }}</div>
+    </div>
+
+    {# History: every applied batch, restorable #}
+    <div class="card mb-3">
+        <div class="card-header"><h3 class="card-title">{{ 'farbfaecher.history.title'|trans }}</h3></div>
+        {% if backups is empty %}
+            <div class="card-body">{{ kit.empty_state('farbfaecher.history.empty'|trans) }}</div>
+        {% else %}
+            {% set columns = {
+                'date': {class: 'alwaysVisible w-min', orderBy: false, title: 'date'},
+                'label': {class: 'alwaysVisible', orderBy: false, title: 'farbfaecher.column.action'},
+                'user': {class: 'd-none d-md-table-cell', orderBy: false, title: 'user'},
+                'count': {class: 'text-end w-min', orderBy: false, title: 'farbfaecher.column.count'},
+                'actions': {class: 'actions alwaysVisible', orderBy: false},
+            } %}
+            {{ tables.datatable_header('farbfaecher_history', columns, null, {boxClass: 'kpu-table-wrap', columnConfig: false, sticky: false}) }}
+                {% for b in backups %}
+                    <tr>
+                        <td class="{{ datatable_column_class('farbfaecher_history', 'date') }}">{{ date(b.created)|date_time }}</td>
+                        <td class="{{ datatable_column_class('farbfaecher_history', 'label') }}">{{ b.label }}</td>
+                        <td class="{{ datatable_column_class('farbfaecher_history', 'user') }}">{{ b.user }}</td>
+                        <td class="{{ datatable_column_class('farbfaecher_history', 'count') }} kpu-num">{{ b.count|amount }}</td>
+                        <td class="{{ datatable_column_class('farbfaecher_history', 'actions') }}">
+                            {{ widgets.table_actions({
+                                'fas fa-rotate-left': {url: '#', title: 'farbfaecher.history.restore', translation_domain: 'messages', attr: {
+                                    'data-kpu-post': path('farbfaecher_restore', {backup: b.id}),
+                                    'data-kpu-token': csrf_token('farbfaecher'),
+                                }},
+                            }) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {{ tables.data_table_footer(null, null, null) }}
+        {% endif %}
+    </div>
+{% endblock %}

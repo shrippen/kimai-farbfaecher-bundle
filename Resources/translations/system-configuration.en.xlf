@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="system-configuration.en.xliff">
+    <body>
+      <trans-unit id="90Y5PRY" resname="farbfaecher">
+        <source>farbfaecher</source>
+        <target>Farbfächer</target>
+      </trans-unit>
+      <trans-unit id="LlqiWgC" resname="farbfaecher.threshold">
+        <source>farbfaecher.threshold</source>
+        <target>Minimum color distance (ΔE)</target>
+      </trans-unit>
+      <trans-unit id="MANptvy" resname="farbfaecher.threshold.help">
+        <source>farbfaecher.threshold.help</source>
+        <target>Perceived distance in OKLab × 100. Pairs below count as clash. 12 suits small color dots.</target>
+      </trans-unit>
+      <trans-unit id="p-8mSNx" resname="farbfaecher.window_days">
+        <source>farbfaecher.window_days</source>
+        <target>Co-usage window (days)</target>
+      </trans-unit>
+      <trans-unit id="9UYHT1V" resname="farbfaecher.window_days.help">
+        <source>farbfaecher.window_days.help</source>
+        <target>Timesheets of this period show which entries are booked in the same weeks. Their colors need to differ most.</target>
+      </trans-unit>
+      <trans-unit id="MJJVjh9" resname="farbfaecher.strategy">
+        <source>farbfaecher.strategy</source>
+        <target>Strategy for suggestions</target>
+      </trans-unit>
+      <trans-unit id="vtMpAeT" resname="farbfaecher.strategy.help">
+        <source>farbfaecher.strategy.help</source>
+        <target>Related: projects in the hue of their customer, activities close to their project. Maximally distinct: every color as far from all others as possible.</target>
+      </trans-unit>
+      <trans-unit id="vxDXSMH" resname="farbfaecher.strategy.hierarchical">
+        <source>farbfaecher.strategy.hierarchical</source>
+        <target>Related (customer → project → activity)</target>
+      </trans-unit>
+      <trans-unit id="h44LAEZ" resname="farbfaecher.strategy.distinct">
+        <source>farbfaecher.strategy.distinct</source>
+        <target>Maximally distinct</target>
+      </trans-unit>
+      <trans-unit id="Z5tdkiW" resname="farbfaecher.palette">
+        <source>farbfaecher.palette</source>
+        <target>Palette for suggestions</target>
+      </trans-unit>
+      <trans-unit id="9DmroV1" resname="farbfaecher.palette.help">
+        <source>farbfaecher.palette.help</source>
+        <target>Follow Kimai color list: suggestions use hues, lightness and chroma of the color list (with a theme like Knust its palette). Free: the whole color space, easiest to tell apart.</target>
+      </trans-unit>
+      <trans-unit id="E-ctl5g" resname="farbfaecher.palette.theme">
+        <source>farbfaecher.palette.theme</source>
+        <target>Follow Kimai color list</target>
+      </trans-unit>
+      <trans-unit id="LTunRtt" resname="farbfaecher.palette_size">
+        <source>farbfaecher.palette_size</source>
+        <target>Palette size (number of colors)</target>
+      </trans-unit>
+      <trans-unit id="8CFnn9l" resname="farbfaecher.palette_size.help">
+        <source>farbfaecher.palette_size.help</source>
+        <target>0 = no limit. Otherwise Farbfächer picks this many colors as far apart as possible (with the Kimai color list its colors first) and assigns only those. Fewer colors are easier to tell apart but repeat more often. Guideline: 12–30.</target>
+      </trans-unit>
+      <trans-unit id="P9-gyty" resname="farbfaecher.palette.free">
+        <source>farbfaecher.palette.free</source>
+        <target>Free</target>
+      </trans-unit>
+      <trans-unit id="2zRTsp_" resname="farbfaecher.free_colors">
+        <source>farbfaecher.free_colors</source>
+        <target>Allow free color choice in forms and API</target>
+      </trans-unit>
+      <trans-unit id="5_GTz0h" resname="farbfaecher.free_colors.help">
+        <source>farbfaecher.free_colors.help</source>
+        <target>Replaces the fixed color list of customers, projects and activities with a free color picker including clash hints and suggestions.</target>
+      </trans-unit>
+      <trans-unit id="wBf53DI" resname="farbfaecher.auto_assign">
+        <source>farbfaecher.auto_assign</source>
+        <target>Assign a fitting color to new entries</target>
+      </trans-unit>
+      <trans-unit id="OV6dFe0" resname="farbfaecher.auto_assign.help">
+        <source>farbfaecher.auto_assign.help</source>
+        <target>Applies when no color was chosen on creation, also via API.</target>
+      </trans-unit>
+      <trans-unit id="IL6q7nu" resname="farbfaecher.include_hidden">
+        <source>farbfaecher.include_hidden</source>
+        <target>Include inactive customers, projects and activities</target>
+      </trans-unit>
+      <trans-unit id="pt8jAq_" resname="farbfaecher.color_blind">
+        <source>farbfaecher.color_blind</source>
+        <target>Consider red/green color blindness</target>
+      </trans-unit>
+      <trans-unit id="AdRqvC7" resname="farbfaecher.color_blind.help">
+        <source>farbfaecher.color_blind.help</source>
+        <target>Colors must also differ under simulated deuteranopia and protanopia. This shrinks the usable color space.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

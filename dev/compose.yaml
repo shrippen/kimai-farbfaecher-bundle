@@ -1,0 +1,39 @@
+# Local Kimai 2.67 for plugin development. Not for production.
+# Start: dev/reset.sh            (with Knust theme: dev/reset.sh --knust)
+# Login: http://localhost:8093  admin@example.test / admin-dev-pass
+name: kimai-farbfaecher
+
+services:
+  db:
+    image: mariadb:11
+    environment:
+      MARIADB_DATABASE: kimai
+      MARIADB_USER: kimai
+      MARIADB_PASSWORD: kimai-dev
+      MARIADB_ROOT_PASSWORD: root-dev
+    volumes:
+      - db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 20
+
+  kimai:
+    image: kimai/kimai2:2.67.0
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8093:8001"
+    environment:
+      ADMINMAIL: admin@example.test
+      ADMINPASS: admin-dev-pass
+      DATABASE_URL: mysql://kimai:kimai-dev@db/kimai?charset=utf8mb4&serverVersion=11.0.0-MariaDB
+      TRUSTED_HOSTS: '^(localhost|127\.0\.0\.1)$$'
+    volumes:
+      - data:/opt/kimai/var/data
+      - ..:/opt/kimai/var/plugins/FarbfaecherBundle:ro
+
+volumes:
+  db:
+  data:
