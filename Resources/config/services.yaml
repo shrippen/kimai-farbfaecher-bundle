@@ -9,6 +9,7 @@ services:
     KimaiPlugin\FarbfaecherBundle\:
         resource: '../../*'
         exclude:
+            - '../../demo/'
             - '../../Resources/'
             - '../../Model/'
             - '../../Color/'
