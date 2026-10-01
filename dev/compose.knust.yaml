@@ -3,4 +3,4 @@
 services:
   kimai:
     volumes:
-      - ../../Kimai Knust:/opt/kimai/var/plugins/KnustBundle:ro
+      - ../../Kante/kimai/knust:/opt/kimai/var/plugins/KnustBundle:ro
