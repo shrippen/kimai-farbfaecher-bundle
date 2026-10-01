@@ -44,8 +44,8 @@ docker compose -f dev/compose.yaml exec --user www-data kimai \
     bin/console kimai:farbfaecher:analyze --plan clashes      # Vorschau auf der Konsole, schreibt nichts
 ```
 
-Oberfläche nach [kimai-plugin-ui](../Kimai%20Plugin%20UI/GUIDELINES.md) (Kit 0.4 in `Resources/views/_kit/`, nur per
-`bin/sync.sh` aktualisieren) und den Regeln von [Knust](https://github.com/shrippen/Kante/blob/main/kimai/knust/PLUGINS.md): Farbpunkte `kpu-mark`,
+Oberfläche nach [kimai-plugin-ui](https://github.com/shrippen/Kante/blob/main/kimai/kit/GUIDELINES.md) (Kit in `Resources/views/_kit/`, nur per
+`kimai/kit/bin/sync.sh` aus dem Kante-Repo aktualisieren) und den Regeln von [Knust](https://github.com/shrippen/Kante/blob/main/kimai/knust/PLUGINS.md): Farbpunkte `kpu-mark`,
 Schwere `kpu-tier`, Zahlen `kpu-num`, keine festen Farben außer Entitätsfarben.
 
 ## CI und Release
