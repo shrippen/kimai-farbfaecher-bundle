@@ -26,25 +26,18 @@ $em = $kernel->getContainer()->get('doctrine')->getManager();
 
 $world = new DemoWorld(getenv('DEMO_LANG') ?: 'de', null, 'today');
 $w = $world->data;
-$de = $world->lang === 'de';
 $customer = static fn (string $id) => $em->getRepository(Customer::class)->findOneBy(['name' => array_column($w['customers'], 'name', 'id')[$id]]);
-$mara = $em->getRepository(User::class)->findOneBy(['email' => 'mara@studio-weber.example.test'])
-    ?? throw new RuntimeException('Core demo data missing (seed-core.php first).');
-$selin = $em->getRepository(User::class)->findOneBy(['email' => 'selin@studio-weber.example.test']);
-
-$extraProjects = [
-    // customer, name, colour (same as a current project, or none)
-    ['northlight', $de ? 'Harbour Lights – Staffel 1' : 'Harbour Lights – Season 1', '#fe8019'],
-    ['speiche', $de ? 'Herbstspot' : 'Autumn commercial', '#83a598'],
-    ['elbgruen', $de ? 'Jahresbericht-Video' : 'Annual report video', '#8ec07c'],
-    ['studio', 'Showreel 2025', null],
-];
-$extraActivities = [
-    [$de ? 'Farbkorrektur' : 'Colour grading', '#83a598'],
-    [$de ? 'Drehvorbereitung' : 'Shoot prep', '#d3869b'],
-    [$de ? 'Sichtung' : 'Footage review', null],
-    [$de ? 'Tonschnitt' : 'Dialogue edit', '#8ec07c'],
-];
+$archive = $w['archive'];
+$bookings = $archive['bookings'];
+$people = array_column($w['people'], 'email', 'id');
+$users = [];
+foreach ($bookings['people'] as $b) {
+    $users[] = [$em->getRepository(User::class)->findOneBy(['email' => $people[$b['user']]])
+        ?? throw new RuntimeException('Core demo data missing (seed-core.php first).'), $b['weekday']];
+}
+// customer, name, colour (same as a current project, or none)
+$extraProjects = array_map(static fn (array $p) => [$p['customer'], $world->t($p['name']), $p['color']], $archive['projects']);
+$extraActivities = array_map(static fn (array $a) => [$world->t($a['name']), $a['color']], $archive['activities']);
 if ($em->getRepository(Project::class)->findOneBy(['name' => $extraProjects[0][1]]) !== null) {
     echo "Already seeded.\n";
     exit(0);
@@ -71,18 +64,20 @@ $em->flush();          // ids first: Farbfächer's listeners query the new entri
 
 // Booked in the same weeks as the current work, so the clashes count.
 $count = 0;
-for ($week = -6; $week <= -1; $week++) {
-    foreach ([[$mara, 1], [$selin, 3]] as [$user, $weekday]) {
-        foreach ([0, 1] as $slot) {
-            $i = ($week + 6 + $slot) % 4;
-            $begin = $world->date($week * 7 + $weekday + $slot, $slot ? '14:00' : '09:00');
+[$firstWeek, $lastWeek] = $bookings['weeks'];
+$slots = $bookings['slots'];
+for ($week = $firstWeek; $week <= $lastWeek; $week++) {
+    foreach ($users as [$user, $weekday]) {
+        foreach (array_keys($slots) as $slot) {
+            $i = ($week - $firstWeek + $slot) % count($projects);
+            $begin = $world->date($week * 7 + $weekday + $slot, $slots[$slot]);
             $t = new Timesheet();
             $t->setUser($user);
             $t->setProject($projects[$i]);
-            $t->setActivity($activities[($i + $slot) % 4]);
+            $t->setActivity($activities[($i + $slot) % count($activities)]);
             $t->setBegin(DateTime::createFromImmutable($begin));
-            $t->setEnd(DateTime::createFromImmutable($begin->modify('+2 hours')));
-            $t->setDuration(7200);
+            $t->setEnd(DateTime::createFromImmutable($begin->modify('+' . $bookings['hours'] . ' hours')));
+            $t->setDuration($bookings['hours'] * 3600);
             $em->persist($t);
             $count++;
         }
