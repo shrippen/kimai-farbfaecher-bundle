@@ -1,0 +1,48 @@
+# PR-Agent settings for Farbfächer (.gitea/workflows/pr-agent.yml); the rest
+# are PR-Agent's defaults.
+[config]
+git_provider = "gitea"
+response_language = "de-DE"
+max_model_tokens = 128000
+fallback_models = []
+publish_output_progress = false
+# The repository rules go along as context.
+repo_context_files = ["agent.md"]
+
+[pr_reviewer]
+num_max_findings = 5
+require_can_be_split_review = true
+enable_review_labels_effort = false
+enable_review_labels_security = false
+extra_instructions = """
+You review pull requests of Farbfächer, a Kimai plugin (Symfony bundle,
+Kimai 2.67) that finds colour clashes between customers, projects and
+activities and suggests colours that differ and still belong together.
+The PRs are written by an AI agent; review them as a careful second
+reader, not as their author.
+
+Report only findings that matter:
+- Bugs: a concrete input or state and the wrong result or crash it gives.
+  Name file and line.
+- Colour maths: distance, contrast or conversions computed wrongly;
+  colours written without the user's confirmation.
+- Permissions: controllers, API or exports without the role or
+  ownership check they need; data of one user reaching another.
+- Knust and the plugin kit not used as they are (own colours, copies of
+  kit macros); texts missing in one of the translations (de, en).
+- Demo code or data (demo/) reaching the release zip.
+- Translations edited by hand instead of generated from
+  dev/translations.php.
+- Missing tests for new behaviour.
+- Breaches of the repository rules (agent.md).
+
+Skip style, naming and formatting (php -l, the JavaScript check and the Kimai end-to-end test run
+separately), praise, and
+guesses you cannot back with the diff. When you find nothing that
+matters, say so in one line.
+"""
+
+[pr_code_suggestions]
+extra_instructions = """
+Only suggestions that fix a bug or a missing check; no style.
+"""
