@@ -42,8 +42,8 @@ one the user loses data to or sees:
 ## What the owner confirms here
 
 "What is published" (rule in `agent.md`) means here: a release (tag
-`vX.Y.Z`, `.github/workflows/release.yml`, the zip) and the landing page
-`docs/`.
+`vX.Y.Z`, `.github/workflows/release.yml`, the zip), and a landing page in
+`docs/` once there is one (today `docs/` holds only screenshots).
 
 ## Skip
 
