@@ -5,4 +5,5 @@
 /.gitignore     export-ignore
 /dev            export-ignore
 /agent.md       export-ignore
+/REVIEW.md      export-ignore
 /demo export-ignore
