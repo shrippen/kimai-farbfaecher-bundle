@@ -55,7 +55,7 @@ Beides liegt in `.github/workflows` und läuft nur auf dem GitHub-Spiegel; die C
 
 - **CI** (jeder Push): PHP-Lint 8.1–8.4, JS-Syntax, Übersetzungen reproduzierbar aus
   `dev/translations.php`, dann das Plugin-ZIP in ein frisches Kimai 2.67 mit MariaDB installieren und testen (`dev/ci.sh`).
-- **Release** (Tag `vX.Y.Z`): Version = `composer.json`, CHANGELOG-Überschrift `## X.Y.Z – <Datum>`
+- **Release** (Tag `vX.Y.Z`): Version = `composer.json`, CHANGELOG-Abschnitt `## [X.Y.Z] — <Datum>`
   (nicht „unveröffentlicht“). Baut `FarbfaecherBundle-X.Y.Z.zip`, testet genau dieses ZIP in Kimai, legt das GitHub-Release
   mit den CHANGELOG-Notizen an und hängt das ZIP an. Das Release auf Gitea bekommt kein ZIP.
 
