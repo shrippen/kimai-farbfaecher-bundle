@@ -54,18 +54,9 @@ jobs:
             echo "Tag $GITHUB_REF_NAME does not match composer.json version $composer" >&2
             exit 1
           fi
-          # "## [X.Y.Z] — date", "## X.Y.Z" or "## vX.Y.Z"
-          heading=$(awk -v v="$version" '
-            /^## / {
-              h = $0; sub(/^## /, "", h); sub(/^\[/, "", h); sub(/^v/, "", h)
-              c = substr(h, length(v) + 1, 1)
-              if (substr(h, 1, length(v)) == v && (c == "" || c == " " || c == "]")) { print; exit }
-            }
-          ' CHANGELOG.md)
-          if [ -z "$heading" ] || grep -qi 'unveröffentlicht\|unreleased' <<< "$heading"; then
-            echo "CHANGELOG.md needs a released heading for $version, found: '$heading'" >&2
-            exit 1
-          fi
+          # Every heading "## [X.Y.Z] — YYYY-MM-DD" (no undated one), and a section for this version
+          scripts/release-notes.sh --check
+          scripts/release-notes.sh "$version" > /dev/null
           echo "VERSION=$version" >> "$GITHUB_ENV"
           echo "ZIP=FarbfaecherBundle-$version.zip" >> "$GITHUB_ENV"
 
@@ -98,21 +89,10 @@ jobs:
 
       - name: Release notes
         # The notes are the CHANGELOG.md section of this version; it must not be empty.
+        # scripts/release-notes.sh is a copy of Kante's tools/release-notes.sh.
         working-directory: plugin
         run: |
-          awk -v v="$VERSION" '
-            /^## / {
-              h = $0; sub(/^## /, "", h); sub(/^\[/, "", h); sub(/^v/, "", h)
-              c = substr(h, length(v) + 1, 1)
-              on = (substr(h, 1, length(v)) == v && (c == "" || c == " " || c == "]"))
-              next
-            }
-            on
-          ' CHANGELOG.md | sed -e '/./,$!d' > ../notes.md
-          if ! grep -q '[^[:space:]]' ../notes.md; then
-            echo "error: the CHANGELOG.md section for $VERSION is empty" >&2
-            exit 1
-          fi
+          scripts/release-notes.sh "$VERSION" > ../notes.md
           cat ../notes.md
 
       - name: Publish on GitHub
