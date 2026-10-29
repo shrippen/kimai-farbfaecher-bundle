@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Farbfächer — Color clashes and suggestions for Kimai</title>
+<meta name="description" content="Kimai plugin that finds color clashes between customers, projects and activities, and suggests colors that stay distinct yet still belong together.">
+<meta property="og:title" content="Farbfächer — Color clashes and suggestions for Kimai">
+<meta property="og:description" content="Kimai plugin that finds color clashes between customers, projects and activities, and suggests colors that stay distinct yet still belong together.">
+<meta property="og:image" content="https://shrippen.github.io/kimai-farbfaecher-bundle/social-preview.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:url" content="https://shrippen.github.io/kimai-farbfaecher-bundle/">
+<link rel="icon" href="icon.svg">
+<script defer src="https://um.arianw.de/script.js" data-website-id="056d39ee-6a9d-4b14-9902-5a1ac399df08"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://shrippen.github.io/v1/shrippen.css">
+<script src="https://shrippen.github.io/v1/shrippen.js"></script>
+</head>
+<body>
+
+<nav class="nav"><div class="nav-inner">
+  <a class="nav-brand" href="#"><img src="icon.svg" alt="">Farbfächer</a>
+  <div class="nav-links">
+    <a href="#features"><span lang="en">Features</span><span lang="de">Funktionen</span></a><a href="#clashes"><span lang="en">Clashes</span><span lang="de">Clashes</span></a><a href="#plan"><span lang="en">Suggestions</span><span lang="de">Vorschläge</span></a><a href="#install"><span lang="en">Install</span><span lang="de">Installation</span></a><a href="#permissions"><span lang="en">Permissions</span><span lang="de">Rechte</span></a><a href="#faq"><span lang="en">FAQ</span><span lang="de">FAQ</span></a><a href="#changes"><span lang="en">Changes</span><span lang="de">Änderungen</span></a><a class="nav-hl" href="https://github.com/shrippen/kimai-farbfaecher-bundle">GitHub</a>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="de" aria-pressed="false">DE</button>
+    </div>
+  </div>
+</div></nav>
+
+<header class="hero">
+  <img class="hero-wm" src="icon-mono.svg" alt="" aria-hidden="true">
+  <div class="hero-main">
+    <h1 style="--title-size:clamp(2.6rem,8vw,6.3rem);--title-size-narrow:clamp(2.2rem,13vw,11rem)">Farb<br class="split">fächer</h1>
+    <p class="tagline" lang="en">Kimai plugin that finds color clashes between customers, projects and activities, and suggests colors that stay distinct yet still belong together. Named after the paint-chip fan designers hold up to compare colors.</p><p class="tagline" lang="de">Kimai-Plugin, das Farb-Clashes zwischen Kunden, Projekten und Tätigkeiten findet und Farben vorschlägt, die sich unterscheiden und trotzdem zusammengehören. Der Name kommt vom Farbfächer, mit dem Gestalter Farben nebeneinanderlegen.</p>
+  </div>
+  <div class="hero-side">
+    <div class="install-card">
+      <label><span lang="en">Install (from the Kimai directory)</span><span lang="de">Installation (im Kimai-Verzeichnis)</span></label><div class="cmd-row"><div class="cmd-box">git clone https://github.com/shrippen/kimai-farbfaecher-bundle.git var/plugins/FarbfaecherBundle &amp;&amp; bin/console kimai:reload</div><button class="copy-btn" type="button" title="Copy" aria-label="Copy"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+      <p class="install-note" lang="en">Needs Kimai 2.67 or newer and PHP 8.1 or newer. No migration: the color lock is a Kimai meta field, settings live in Kimai’s configuration, backups in <code>var/data/farbfaecher/</code>. To update: <code>git pull</code> in the plugin folder, then <code>bin/console kimai:reload</code>.</p><p class="install-note" lang="de">Braucht Kimai 2.67 oder neuer und PHP 8.1 oder neuer. Keine Migration: Die Farbsperre ist ein Kimai-Meta-Feld, Einstellungen liegen in Kimais Konfiguration, Sicherungen in <code>var/data/farbfaecher/</code>. Zum Aktualisieren: <code>git pull</code> im Plugin-Ordner, danach <code>bin/console kimai:reload</code>.</p>
+      <div class="install-links"><a class="btn btn-primary" href="https://github.com/shrippen/kimai-farbfaecher-bundle/releases">Download</a><a class="btn btn-ghost" href="https://github.com/shrippen/kimai-farbfaecher-bundle">GitHub</a></div>
+    </div>
+    <div class="hero-shot"><img lang="en" src="shots/clashes-en-default.webp" alt="The Farbfächer overview in Kimai: clashes by severity, a color map, an overview by customer and the change history"><img lang="de" src="shots/clashes-de-default.webp" alt="The Farbfächer overview in Kimai: clashes by severity, a color map, an overview by customer and the change history"></div>
+  </div>
+</header>
+
+<main>
+<div class="section"><div class="callout callout-warn"><span lang="en"><strong>Note:</strong> A calculation aid without guarantee. Roughly 20–30 colors stay reliably distinct; with more entries, Farbfächer prioritizes pairs that are used together or sit next to each other, the rest stays a “notice”. Colors are written directly, without going through Kimai’s update events.</span><span lang="de"><strong>Hinweis:</strong> Eine Berechnungshilfe ohne Gewähr. Etwa 20–30 Farben sind sicher unterscheidbar; bei mehr Einträgen bevorzugt Farbfächer Paare, die zusammen genutzt werden oder nebeneinanderstehen, der Rest bleibt „Hinweis“. Farben werden direkt geschrieben, ohne über Kimais Update-Events zu laufen.</span></div></div>
+<section class="facts"><div class="fact"><b>ΔE</b><span><span lang="en">Perceived distance in the OKLab color space</span><span lang="de">Wahrgenommener Abstand im OKLab-Farbraum</span></span></div><div class="fact"><b>2</b><span><span lang="en">Suggestion strategies: hierarchical and maximally distinct</span><span lang="de">Vorschlagsstrategien: zusammenhängend und maximal unterscheidbar</span></span></div><div class="fact"><b>15 min</b><span><span lang="en">Undo window, plus a full history to restore</span><span lang="de">Rückgängig-Fenster, dazu ein Verlauf zum Wiederherstellen</span></span></div><div class="fact"><b>GPL-3</b><span><span lang="en">Open source</span><span lang="de">Open Source</span></span></div></section>
+<section class="features" id="features">
+  <div class="feat" data-tier="red">
+    <span class="feat-tag"><span lang="en">Clashes</span><span lang="de">Clashes</span></span>
+    <h3 lang="en">Find clashes by severity</h3><h3 lang="de">Clashes nach Schwere finden</h3>
+    <p lang="en">Notice, warning or critical, measured as perceived distance (ΔE) in the OKLab color space. How much a clash weighs depends on whether two entries are booked in the same weeks or sit in the same group.</p><p lang="de">Hinweis, Warnung oder kritisch, gemessen als wahrgenommener Abstand (ΔE) im OKLab-Raum. Wie schwer ein Clash wiegt, hängt davon ab, ob zwei Einträge in denselben Wochen gebucht werden oder in derselben Gruppe liegen.</p>
+  </div>
+  <div class="feat" data-tier="yellow">
+    <span class="feat-tag"><span lang="en">Preview</span><span lang="de">Vorschau</span></span>
+    <h3 lang="en">Suggestions with a preview</h3><h3 lang="de">Vorschlag mit Vorschau</h3>
+    <p lang="en">Scope: fix clashes, fill in missing colors, or recolor everything. Apply with a bulk selection, then 15 minutes of “Undo”. Every state is backed up and can be restored from the history.</p><p lang="de">Umfang: Clashes beheben, fehlende Farben ergänzen oder alles neu färben. Übernehmen per Sammelauswahl, danach 15 Minuten „Rückgängig“. Jeder Stand wird gesichert und lässt sich aus dem Verlauf wiederherstellen.</p>
+  </div>
+  <div class="feat" data-tier="blue">
+    <span class="feat-tag"><span lang="en">Strategy</span><span lang="de">Strategie</span></span>
+    <h3 lang="en">Two ways to assign colors</h3><h3 lang="de">Zwei Wege der Farbvergabe</h3>
+    <p lang="en"><em>Hierarchical:</em> projects take their customer’s hue, activities stay close to their project. <em>Maximally distinct:</em> every color as far from all others as possible.</p><p lang="de"><em>Zusammenhängend:</em> Projekte im Farbton ihres Kunden, Tätigkeiten nahe ihrem Projekt. <em>Maximal unterscheidbar:</em> jede Farbe möglichst weit weg von allen anderen.</p>
+  </div>
+  <div class="feat" data-tier="red">
+    <span class="feat-tag"><span lang="en">Palette</span><span lang="de">Palette</span></span>
+    <h3 lang="en">Kimai’s color list, or free</h3><h3 lang="de">Kimais Farbliste oder frei</h3>
+    <p lang="en">Suggestions can lean on Kimai’s color list (<code>theme.color_choices</code>) — Gruvbox with the Knust theme — or use the free color space. Optionally limit the palette to N colors, chosen for the largest mutual distance.</p><p lang="de">Vorschläge lehnen sich an Kimais Farbliste an (<code>theme.color_choices</code>), mit Knust also an Gruvbox, oder nutzen den freien Farbraum. Optional auf N Farben begrenzen, gewählt nach dem größten gegenseitigen Abstand.</p>
+  </div>
+  <div class="feat" data-tier="yellow">
+    <span class="feat-tag"><span lang="en">Forms</span><span lang="de">Formulare</span></span>
+    <h3 lang="en">A color field with live hints</h3><h3 lang="de">Farbfeld mit Live-Hinweisen</h3>
+    <p lang="en">A free color picker instead of a fixed list in customer, project and activity forms, with clash hints while typing and suggestions on click. Applies to the REST API too — external clients can set any hex value.</p><p lang="de">Freier Farbwähler statt fester Liste in Kunden-, Projekt- und Tätigkeitsformularen, mit Clash-Hinweisen beim Tippen und Vorschlägen per Klick. Gilt auch für die REST-API, externe Clients können jeden Hex-Wert setzen.</p>
+  </div>
+  <div class="feat" data-tier="blue">
+    <span class="feat-tag"><span lang="en">Locking</span><span lang="de">Sperre</span></span>
+    <h3 lang="en">Automatic color, or locked</h3><h3 lang="de">Automatische Farbe oder gesperrt</h3>
+    <p lang="en">New entries without a color get one automatically, including over the API. Lock a color per entry — Farbfächer will never change it, no matter which suggestion you apply.</p><p lang="de">Neue Einträge ohne Farbe bekommen automatisch eine, auch über die API. Eine Farbe pro Eintrag sperren — Farbfächer ändert sie nie, egal welchen Vorschlag du übernimmst.</p>
+  </div>
+</section>
+<section class="showcase" id="clashes"><div class="showcase-text"><span class="showcase-tag"><span lang="en">Overview</span><span lang="de">Übersicht</span></span><h2 lang="en">See every clash at a glance</h2><h2 lang="de">Jeden Clash auf einen Blick</h2><p lang="en">The overview under <strong>Administration → Farbfächer</strong> lists every clash with severity, type, the two entries involved, their ΔE, how many weeks they were booked together and why the clash matters.</p><p lang="de">Die Übersicht unter <strong>Administration → Farbfächer</strong> listet jeden Clash mit Schwere, Typ, den beiden betroffenen Einträgen, ihrem ΔE, den gemeinsam gebuchten Wochen und dem Grund, warum der Clash zählt.</p><ul lang="en"><li>Color map by hue and lightness, an overview by customer, and a history of every change</li><li>The shared-usage window (default 90 days) and the ΔE threshold are set under System → Settings</li><li><code>bin/console kimai:farbfaecher:analyze --plan clashes</code> gives the same list on the console, read-only</li></ul><ul lang="de"><li>Farbkarte nach Farbton und Helligkeit, eine Übersicht nach Kunde und ein Verlauf aller Änderungen</li><li>Das Fenster für gemeinsame Nutzung (Standard 90 Tage) und die ΔE-Schwelle stellst du unter System → Einstellungen ein</li><li><code>bin/console kimai:farbfaecher:analyze --plan clashes</code> liefert dieselbe Liste auf der Konsole, rein lesend</li></ul></div><figure><img lang="en" src="shots/clashes-en-default.webp" alt="Farbfächer overview: 46 clashes by severity, counts for customers, projects and activities, a form to compute a suggestion, and the clash table" loading="lazy"><img lang="de" src="shots/clashes-de-default.webp" alt="Farbfächer overview: 46 clashes by severity, counts for customers, projects and activities, a form to compute a suggestion, and the clash table" loading="lazy"><figcaption><span lang="en">Clash overview (demo data)</span><span lang="de">Clash-Übersicht (Demodaten)</span></figcaption></figure></section>
+<section class="showcase rev" id="plan"><div class="showcase-text"><span class="showcase-tag"><span lang="en">Suggestion</span><span lang="de">Vorschlag</span></span><h2 lang="en">Preview before you touch anything</h2><h2 lang="de">Vorschau, bevor sich etwas ändert</h2><p lang="en">Pick a scope and a strategy, and Farbfächer computes a plan: every planned change with the old and new color and a reason, plus clash counts before and after. Nothing is written until you select and apply.</p><p lang="de">Umfang und Strategie wählen, Farbfächer berechnet einen Plan: jede geplante Änderung mit alter und neuer Farbe und einem Grund, dazu die Clash-Zahlen vorher und nachher. Geschrieben wird erst nach Auswahl und Übernehmen.</p><ul lang="en"><li>Deselect single entries or whole groups (customers, projects, activities) before applying</li><li>Locked colors are always kept, even inside the selected scope</li><li>Applied changes stay undoable for 15 minutes, and every earlier state can be restored from the history later</li></ul><ul lang="de"><li>Einzelne Einträge oder ganze Gruppen (Kunden, Projekte, Tätigkeiten) vor dem Übernehmen abwählen</li><li>Gesperrte Farben bleiben immer erhalten, auch innerhalb des gewählten Umfangs</li><li>Übernommene Änderungen bleiben 15 Minuten rückgängig machbar, jeder frühere Stand lässt sich später aus dem Verlauf wiederherstellen</li></ul></div><figure><img lang="en" src="shots/plan-en-default.webp" alt="Farbfächer suggestion: 19 planned changes reducing 46 clashes to 1, grouped by customers and projects with old and new color and a reason" loading="lazy"><img lang="de" src="shots/plan-de-default.webp" alt="Farbfächer suggestion: 19 planned changes reducing 46 clashes to 1, grouped by customers and projects with old and new color and a reason" loading="lazy"><figcaption><span lang="en">Suggestion preview (demo data)</span><span lang="de">Vorschlagsvorschau (Demodaten)</span></figcaption></figure></section>
+<section class="section" id="how"><h2 lang="en">How it works</h2><h2 lang="de">So funktioniert es</h2><p lang="en">Farbfächer adds one screen under <strong>Administration</strong> and runs the same logic from the console. It reads timesheets to weigh shared usage, then plans and writes colors in four steps.</p><p lang="de">Farbfächer bringt einen Bereich unter <strong>Administration</strong> und lässt dieselbe Logik auch über die Konsole laufen. Es liest Zeiteinträge, um gemeinsame Nutzung zu gewichten, und plant und schreibt Farben in vier Schritten.</p><div class="flow"><div class="flow-node"><b>GraphBuilder</b><span><span lang="en">Customers, projects, activities, plus shared usage from timesheets per user and week</span><span lang="de">Kunden, Projekte, Tätigkeiten, dazu gemeinsame Nutzung aus Zeiteinträgen je Benutzer und Woche</span></span></div><span class="flow-arrow" aria-hidden="true"></span><div class="flow-node"><b>ColorEngine</b><span><span lang="en">Clashes below the ΔE threshold, weighted; candidates per strategy</span><span lang="de">Clashes unter der ΔE-Schwelle, gewichtet; Kandidaten je Strategie</span></span></div><span class="flow-arrow" aria-hidden="true"></span><div class="flow-node hl"><b>ColorPlanner</b><span><span lang="en">Greedy assignment plus one improvement pass, fast enough for hundreds of entries</span><span lang="de">Greedy-Zuteilung plus ein Verbesserungsdurchlauf, schnell genug für Hunderte Einträge</span></span></div><span class="flow-arrow" aria-hidden="true"></span><div class="flow-node"><b>ColorWriter</b><span><span lang="en">Writes colors, backs up every state, restores only what’s unchanged</span><span lang="de">Schreibt Farben, sichert jeden Stand, stellt nur Unverändertes wieder her</span></span></div></div></section>
+<section class="section" id="install"><h2 lang="en">Install</h2><h2 lang="de">Installation</h2><ol class="steps" lang="en"><li>Clone the plugin into <code>var/plugins/FarbfaecherBundle</code>; the folder name must stay <code>FarbfaecherBundle</code>.</li><li>Run <code>bin/console kimai:reload</code>. There is no migration to run.</li><li>Grant the <code>farbfaecher</code> permission under <strong>System → Roles</strong> to the roles that should see it (Admin and Super-Admin by default).</li><li>Set palette, ΔE threshold, palette size and the shared-usage window under <strong>System → Settings → Farbfächer</strong>.</li></ol><ol class="steps" lang="de"><li>Klone das Plugin nach <code>var/plugins/FarbfaecherBundle</code>; der Ordnername muss <code>FarbfaecherBundle</code> bleiben.</li><li>Führe <code>bin/console kimai:reload</code> aus. Eine Migration ist nicht nötig.</li><li>Vergib das Recht <code>farbfaecher</code> unter <strong>System → Rollen</strong> an die Rollen, die es sehen sollen (standardmäßig Admin und Super-Admin).</li><li>Stelle Palette, ΔE-Schwelle, Palettengröße und das Fenster für gemeinsame Nutzung unter <strong>System → Einstellungen → Farbfächer</strong> ein.</li></ol></section>
+<section class="section" id="permissions"><h2 lang="en">Permissions</h2><h2 lang="de">Rechte</h2><div class="table-wrap"><table class="table"><thead><tr><th><span lang="en">Permission</span><span lang="de">Recht</span></th><th><span lang="en">Purpose</span><span lang="de">Zweck</span></th><th><span lang="en">Default</span><span lang="de">Standard</span></th></tr></thead><tbody><tr><td><code>farbfaecher</code></td><td><span lang="en">Overview, suggestions and settings</span><span lang="de">Übersicht, Vorschläge und Einstellungen</span></td><td><span lang="en">Admin, Super-Admin</span><span lang="de">Admin, Super-Admin</span></td></tr></tbody></table></div></section>
+<section class="section" id="faq"><h2 lang="en">Questions</h2><h2 lang="de">Fragen</h2><div class="faq"><details><summary><span lang="en">Do I need the Knust theme?</span><span lang="de">Brauche ich das Knust-Theme?</span></summary><div><p lang="en">No. Farbfächer works with Kimai’s default color list or the free color space. With the Knust theme it follows Gruvbox automatically, because Knust sets that as Kimai’s color list.</p><p lang="de">Nein. Farbfächer funktioniert mit Kimais Standard-Farbliste oder dem freien Farbraum. Mit dem Knust-Theme folgt es automatisch Gruvbox, weil Knust das als Kimais Farbliste einträgt.</p></div></details><details><summary><span lang="en">Does it change my colors right away?</span><span lang="de">Ändert es meine Farben sofort?</span></summary><div><p lang="en">No. Every scope first computes a preview; nothing is written until you select the changes and apply them.</p><p lang="de">Nein. Jeder Umfang berechnet zuerst eine Vorschau; geschrieben wird erst, wenn du Änderungen auswählst und übernimmst.</p></div></details><details><summary><span lang="en">What if I don’t like a change?</span><span lang="de">Was, wenn mir eine Änderung nicht gefällt?</span></summary><div><p lang="en">Applied changes stay undoable for 15 minutes. Beyond that, every earlier state is kept in the history and can be restored from there.</p><p lang="de">Übernommene Änderungen bleiben 15 Minuten rückgängig machbar. Darüber hinaus bleibt jeder frühere Stand im Verlauf erhalten und lässt sich von dort wiederherstellen.</p></div></details><details><summary><span lang="en">Does it fire Kimai’s update events?</span><span lang="de">Löst es Kimais Update-Events aus?</span></summary><div><p lang="en">No, colors are written directly to stay fast across hundreds of entries. Anything that listens for update events on customers, projects or activities won’t see these changes.</p><p lang="de">Nein, Farben werden direkt geschrieben, damit es auch bei Hunderten Einträgen schnell bleibt. Wer auf Update-Events von Kunden, Projekten oder Tätigkeiten hört, bekommt diese Änderungen nicht mit.</p></div></details></div></section>
+<section class="section" id="changes">
+  <h2 lang="en">Changes</h2><h2 lang="de">Änderungen</h2>
+  <p lang="en">What each release brought, newest first. Every release adds an entry here and the same notes on the release page.</p><p lang="de">Was jede Version gebracht hat, die neueste zuerst. Jede Version bekommt hier einen Eintrag und dieselben Notizen auf der Release-Seite.</p>
+  <ol class="changelog">
+    <li class="release" id="v0.1.0">
+      <div class="release-head"><b class="release-version">0.1.0</b><time datetime="2026-09-26"><span lang="en">26 Sep 2026</span><span lang="de">26. Sep. 2026</span></time></div>
+      <div class="release-body">
+        <p class="release-lead"><span lang="en">The first release: Farbfächer finds colors in Kimai that are hard to tell apart and suggests colors for customers, projects and activities that stay distinct and still belong together.</span><span lang="de">Die erste Version: Farbfächer findet Farben in Kimai, die sich schwer unterscheiden lassen, und schlägt Farben für Kunden, Projekte und Tätigkeiten vor, die sich unterscheiden und trotzdem zusammengehören.</span></p>
+      </div>
+    </li>
+  </ol>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <img src="icon.svg" alt="">
+      <div><span class="foot-name">Farbfächer</span><span class="foot-tag"><span lang="en">Color clashes and suggestions for Kimai</span><span lang="de">Farb-Clashes und Vorschläge für Kimai</span></span></div>
+    </div>
+    <nav class="foot-cols" aria-label="Footer">
+      <div><h4><span lang="en">Project</span><span lang="de">Projekt</span></h4><a href="#features"><span lang="en">Features</span><span lang="de">Funktionen</span></a><a href="#clashes"><span lang="en">Clashes</span><span lang="de">Clashes</span></a><a href="#plan"><span lang="en">Suggestions</span><span lang="de">Vorschläge</span></a><a href="#install"><span lang="en">Install</span><span lang="de">Installation</span></a><a href="#permissions"><span lang="en">Permissions</span><span lang="de">Rechte</span></a><a href="#faq"><span lang="en">FAQ</span><span lang="de">FAQ</span></a><a href="#changes"><span lang="en">Changes</span><span lang="de">Änderungen</span></a></div>
+      <div><h4><span lang="en">Source</span><span lang="de">Quelltext</span></h4><a href="https://github.com/shrippen/kimai-farbfaecher-bundle">GitHub</a><a href="https://github.com/shrippen/kimai-farbfaecher-bundle/issues">Issues</a></div>
+    </nav>
+  </div>
+  <div class="foot-meta"><p>GPL-3.0-or-later · shrippen · <a href="#changes">v0.1.0</a></p></div>
+</footer>
+
+</body>
+</html>
