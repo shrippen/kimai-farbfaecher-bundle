@@ -35,6 +35,11 @@ one the user loses data to or sees:
 - `Resources/views/_kit/` changes only through the kit's `sync.sh`.
 - New behaviour has a test (`dev/ci.sh` installs the zip into Kimai 2.67
   and checks the pages and the analysis).
+- Release: a section `## [X.Y.Z] — date` in `CHANGELOG.md` with lead and
+  groups in English and German (it becomes the release notes, the release
+  workflow fails without it); once `docs/` has a landing page, the same
+  entry at the top of its `#changes` and the footer version bumped
+  (release rule in `agent.md`).
 - Bug fixes: does the fix remove the cause, with a test that failed before?
 - `agent.md` code rules: braces always, early return, enums not bools,
   private by default (widening needs the owner's approval).
