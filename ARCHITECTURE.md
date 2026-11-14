@@ -28,9 +28,10 @@ suggests colours.
 | `Form/` | The plan form; the free colour field that replaces Kimai's colour list in its edit forms. |
 | `EventSubscriber/` | Hooks into Kimai: menu, permissions, page actions, settings page, the "lock colour" field, colour for new entries, stylesheet and script on every page. |
 | `Resources/views/`, `Resources/assets/` | Templates and their shared macros; the plugin's stylesheet and the script of the colour field. `Resources/views/_kit/` is the vendored Kimai plugin kit, never edited here. |
-| `Resources/translations/` | All texts, German and English. |
+| `Resources/translations/` | All texts, German and English. Generated from `dev/translations.php`, never edited by hand; `kpu.*.xlf` are the kit's texts, vendored. |
 | `FarbfaecherBundle.php`, `DependencyInjection/`, `Resources/config/` | Registration in Kimai: services and routes. |
-| `dev/`, `demo/`, `docs/`, `scripts/`, `tools/` | Not part of the plugin zip: the end-to-end check in a local Kimai, demo data, landing page, release and check scripts. |
+| `dev/`, `demo/`, `scripts/`, `tools/` | Not part of the plugin zip: the source of the texts and the end-to-end check in a local Kimai, demo data, release and check scripts. |
+| `docs/` | The landing page. |
 
 ## Layers
 
@@ -38,8 +39,9 @@ suggests colours.
  entry points   Controller   Command   EventSubscriber   Form   (templates, script)
                      │  ask for the work, show the answer
                      ▼
- work           Service:  GraphBuilder ─► ColorEngine, ColorPlanner ─► ColorWriter
+ work           Service:  GraphBuilder    ColorEngine, ColorPlanner    ColorWriter
                           (reads Kimai)   (judge, plan)                (writes Kimai)
+                          the data passes from left to right, carried by the entry point
                      │
                      ▼
  data           Model  (snapshots: nodes, graph, clashes, changes)
@@ -58,9 +60,9 @@ suggests colours.
   without Kimai. A newly created entry is the exception: its colour is set on the
   entry before Kimai saves it.
 - `Color/` imports nothing from the plugin; `Model/` imports only `Color/`.
-- Nothing writes a colour without a plan the user confirmed, except the colour of a
-  newly created entry. A locked colour is never changed. Every write is backed up
-  first.
+- A colour of an existing entry changes in three ways only: a plan the user
+  confirmed, undo, and restore of a backup. `ColorWriter` saves the backup before it
+  writes and leaves a locked colour alone on each of the three ways.
 - A rule of the colour calculation stands once: a weight, a threshold, a fallback
   value, the distance of two colours. Judging, planning and the suggestions in the
   colour field use the same one.
@@ -76,10 +78,11 @@ suggests colours.
 | Change | Touch |
 |---|---|
 | A rule of how colours are judged or ranked | `Service/ColorEngine.php` (planning: `Service/ColorPlanner.php`); pure math in `Color/`; a test |
-| A new setting | `Configuration/FarbfaecherConfiguration.php`, `EventSubscriber/SystemConfigurationSubscriber.php`, translations (`system-configuration.*.xlf`), README |
+| A new setting | `Configuration/FarbfaecherConfiguration.php`, `EventSubscriber/SystemConfigurationSubscriber.php`, its texts in `dev/translations.php`, README |
 | Something new known about an entry | `Model/ColorNode.php`, `Service/GraphBuilder.php` |
-| A new level of a clash or source of a colour | Its enum in `Model/`, translations |
-| Something new on the overview or the plan | A service that computes it, the controller, the template, translations |
+| A new level of a clash or source of a colour | Its enum in `Model/`, its texts |
+| A new text | `dev/translations.php`, which writes `Resources/translations/` |
+| Something new on the overview or the plan | A service that computes it, the controller, the template, its texts |
 | A new action that writes colours | `Service/ColorWriter.php` (with backup), a route in the controller with permission and token check, a call in `dev/ci.sh` |
 | A change to the colour field in Kimai's forms | `Form/`, `Resources/assets/color-field.js` |
 | A new hook into Kimai | `EventSubscriber/` |
@@ -97,6 +100,8 @@ suggests colours.
 - The levels of a clash are spelled out eight times in PHP, templates and script, two
   versions disagree (`AUDIT.md`, finding 2); where a colour comes from is a loose word
   in six files (`AUDIT.md`, finding 8).
+- `ColorWriter` writes first and saves the backup after; apply and restore do not
+  check the lock, only the planner does (not in `AUDIT.md`; bugs).
 - The controller computes the content of the overview itself
   (`AUDIT.md`, finding 9).
 - Some functions and parameters nothing uses (`AUDIT.md`, finding 7).
