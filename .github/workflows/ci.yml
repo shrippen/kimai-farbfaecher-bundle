@@ -1,5 +1,6 @@
-# Checks on every push: PHP syntax 8.1–8.4, JavaScript syntax, translations generated from
-# dev/translations.php, and the release zip installed into Kimai 2.67 (dev/ci.sh).
+# Checks on every push: structure limits (tools/structure-check.py), PHP syntax 8.1–8.4,
+# JavaScript syntax, translations generated from dev/translations.php, and the release zip
+# installed into Kimai 2.67 (dev/ci.sh).
 #
 # Public mirror: Gitea pushes every branch and tag here on each commit.
 # This runs the checks and reports them back to the commit on Gitea as
@@ -48,6 +49,9 @@ jobs:
           GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
 
       - uses: actions/checkout@v4
+
+      - name: Structure limits
+        run: pipx run tools/structure-check.py
 
       - name: CHANGELOG.md headings
         run: scripts/release-notes.sh --check
