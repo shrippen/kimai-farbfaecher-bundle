@@ -1,0 +1,7 @@
+# What is over a structure limit today (tools/structure-check.py). An entry may shrink,
+# never grow; a raised or new entry needs its reason in the PR. Rewrite with --update.
+# Lines: exclude<TAB>glob | path<TAB>function or - for the file<TAB>metric=value ...
+exclude	Resources/views/_kit/*
+Resources/assets/color-field.js	(anonymous)	length=241
+Resources/assets/color-field.js	init	length=180
+Service/ColorPlanner.php	ColorPlanner::plan	length=85
