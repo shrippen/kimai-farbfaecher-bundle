@@ -55,14 +55,14 @@ suggests colours.
 
 - An entry point holds no rule and computes nothing it shows: counts, trees and
   positions for a page come from a service.
-- Only `GraphBuilder` reads Kimai's database and only `ColorWriter` writes it. The
-  judging and planning between them work on the model alone, so they can be tested
-  without Kimai. A newly created entry is the exception: its colour is set on the
-  entry before Kimai saves it.
+- Only `GraphBuilder` reads Kimai's database and only `ColorWriter` writes it;
+  `ColorWriter` reads just the entries it writes. The judging and planning between
+  them work on the model alone, so they can be tested without Kimai. A newly created
+  entry is the exception: its colour is set on the entry before Kimai saves it.
 - `Color/` imports nothing from the plugin; `Model/` imports only `Color/`.
-- A colour of an existing entry changes in three ways only: a plan the user
-  confirmed, undo, and restore of a backup. `ColorWriter` saves the backup before it
-  writes and leaves a locked colour alone on each of the three ways.
+- The plugin changes the colour of an existing entry in three ways only: a plan the
+  user confirmed, undo, and restore of a backup. `ColorWriter` saves the backup
+  before it writes and leaves a locked colour alone on each of the three ways.
 - A rule of the colour calculation stands once: a weight, a threshold, a fallback
   value, the distance of two colours. Judging, planning and the suggestions in the
   colour field use the same one.
